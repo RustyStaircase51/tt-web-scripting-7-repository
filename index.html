@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>The Recipe Searcher</title>
+	<link rel="stylesheet" href="css/api-search.css">
+	<script src="js/search-script.js" defer></script>
+</head>
+
+<body>
+<nav>
+	<a href="index.html">Search</a>
+	<a href="favorites.html">View Favorites</a>
+</nav>
+
+<header>
+	<h1>The Recipe Searcher</h1>
+</header>
+
+
+
+<main>
+	<div id = "search">
+		<h2>Welcome to The Recipe Searcher!<br>Search for a dish name to find a recipe.</h2>
+
+		<label>Dish Name:</label>
+		<input type = "text" id="searchInput" placeholder = "chicken"></input>
+		<button id = "searchBtn">Search</button>
+		
+		<p id = "status"></p>
+	</div>
+	
+	<div id="results"></div>
+
+</main>
+<footer>
+	<a href= "https://www.themealdb.com/api.php">Thank you to The Meal DB for the recipe API</a>
+</footer>
+</body>
+</html>
