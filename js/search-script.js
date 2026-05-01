@@ -2,19 +2,16 @@ const searchBtn = document.getElementById("searchBtn");
 const searchInput = document.getElementById("searchInput");
 const status = document.getElementById("status");
 const results = document.getElementById("results");
+let currentMeals = []; 
 
 
-let currentMeals = []; //added
-
-
-
-// Button Listeners
+// Button Listeners ()
 searchBtn.addEventListener("click", runSearch);
 results.addEventListener("click", function (e) {
     const id = e.target.getAttribute("meal-id");
 
     if (e.target.classList.contains("favBtn")) {
-        saveFavorites(id);
+        toggleFavorites(id, e.target);
     }
 
     if (e.target.classList.contains("viewBtn")) {
@@ -57,7 +54,7 @@ async function runSearch() {
 
 		status.textContent = `Found ${data.meals.length} result(s).`;
 		
-		currentMeals = data.meals; //added
+		currentMeals = data.meals;
 		loadResults(data);	
 				
 		
@@ -69,7 +66,11 @@ async function runSearch() {
 
 //UI logic for search
 function loadResults(data) {
+	let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+	
 	results.innerHTML = data.meals.map(meal => {
+		const isSaved = favorites.some(f => f.idMeal === meal.idMeal);
+		
 		return `<div class="card">
 			<br><h3>${meal.strMeal}</h3>
 			
@@ -79,8 +80,7 @@ function loadResults(data) {
 			<img src="${meal.strMealThumb}" alt="${meal.strMeal}"/>
 			
 			<br><button class="viewBtn" meal-id="${meal.idMeal}">View Recipe</button>
-			<br><button class="favBtn" meal-id="${meal.idMeal}">Add to Favorites</button>
-
+			<br><button class="favBtn ${isSaved ? "removeFav" : ""}" meal-id="${meal.idMeal}"> ${isSaved ? "Remove Favorite" : "Add to Favorites"}</button>
 		
 		</div>`;}).join("");
 }
@@ -89,23 +89,23 @@ function loadResults(data) {
 
 
 
-// Favorites Logic
-function saveFavorites(id) {
+// Favorite Logic
+function toggleFavorites(id, button) {
 	const meal = currentMeals.find(m => m.idMeal === id);
-	
 	let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
-	
-	if (!favorites.some(f => f.idMeal === id)) {
+	const index = favorites.findIndex(f => f.idMeal === id);
+
+	if (index === -1) {
 		favorites.push(meal);
-		localStorage.setItem("favorites", JSON.stringify(favorites));
-		alert("Saved to favorites!")
-		console.log("Added to favorites")
+		button.textContent = "Remove Favorite";
+		button.classList.add("removeFav");
 	}
 	else {
-		alert("Already in favorites.")
-		console.log("Not added to favorites")
-		
+		favorites.splice(index, 1);
+		button.textContent = "Add to Favorites";
+		button.classList.remove("removeFav");
 	}
+	localStorage.setItem("favorites", JSON.stringify(favorites));
 };
 
 
