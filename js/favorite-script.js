@@ -42,7 +42,7 @@ function filterFavorites() {
 // loads the card div unless there are no favorites.
 function displayFavorites(list = favorites) {
     if (list.length === 0) {
-        status.textContent = "No favorites saved yet.";
+        status.textContent = "No favorites saved yet. Go search for some new recipes!";
         savedContainer.innerHTML = "";
         return;
     }
