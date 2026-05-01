@@ -2,7 +2,9 @@ const searchBtn = document.getElementById("searchBtn");
 const searchInput = document.getElementById("searchInput");
 const status = document.getElementById("status");
 const results = document.getElementById("results");
+const categoryFilter = document.getElementById("categoryFilter");
 let currentMeals = []; 
+
 
 
 // Button Listeners ()
@@ -52,10 +54,19 @@ async function runSearch() {
 			return;
 		}
 
-		status.textContent = `Found ${data.meals.length} result(s).`;
+		let meals = data.meals
+		
+		const category = categoryFilter.value
+
+		if (category) {
+			meals = meals.filter(meal => meal.strCategory === category);
+		}
+		
+		
+		status.textContent = `Found ${meals.length} result(s).`;
 		
 		currentMeals = data.meals;
-		loadResults(data);	
+		loadResults({meals});	// calls UI
 				
 		
 		} catch (error) {
@@ -63,6 +74,8 @@ async function runSearch() {
 		console.error(error);
 		}
 }
+
+
 
 //UI logic for search
 function loadResults(data) {

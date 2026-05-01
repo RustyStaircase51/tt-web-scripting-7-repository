@@ -1,9 +1,11 @@
 const savedContainer = document.getElementById("saved");
 const status = document.getElementById("status");
 let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+const categoryFilter = document.getElementById("categoryFilter");
 
 
 // Listens for buttons ("View Recipe", "Remove Favorite", and "Back to Favorites")
+categoryFilter.addEventListener("change", filterFavorites);
 savedContainer.addEventListener("click", function (e) {
     const id = e.target.getAttribute("meal-id");
 
@@ -14,24 +16,40 @@ savedContainer.addEventListener("click", function (e) {
         removeFavorite(id);
     }
     if (e.target.classList.contains("backBtn")){
+        categoryFilter.value = ""
         displayFavorites();
     }
 
 });
 
 
+//filters favorites
+function filterFavorites() { 
+    const category = categoryFilter.value
+    if (category) {
+        const filtered = favorites.filter(meal => meal.strCategory === category);
+        displayFavorites(filtered);
+        return;
+    }
+
+        displayFavorites(favorites);
+        return;
+
+
+
+}
 
 // loads the card div unless there are no favorites.
-function displayFavorites() {
-    if (favorites.length === 0) {
+function displayFavorites(list = favorites) {
+    if (list.length === 0) {
         status.textContent = "No favorites saved yet.";
         savedContainer.innerHTML = "";
         return;
     }
 
-    status.textContent = `You have ${favorites.length} favorite(s).`;
+    status.textContent = `Showing ${list.length} favorite(s).`;
 
-    savedContainer.innerHTML = favorites.map(meal => {
+    savedContainer.innerHTML = list.map(meal => {
         return `
         <div class="card">
             <h3>${meal.strMeal}</h3>
@@ -81,6 +99,9 @@ function viewRecipe(id) {
         </div>
     `;
 }
+
+
+
 
 //Shows favorites immediately on page load
 displayFavorites();

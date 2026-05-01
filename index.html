@@ -5,7 +5,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>The Recipe Searcher</title>
-	<link rel="stylesheet" href="css/api-search.css">
+	<link rel="stylesheet" href="css/searcher.css">
 	<script src="js/search-script.js" defer></script>
 </head>
 
@@ -24,9 +24,26 @@
 <main>
 	<div id = "search">
 		<h2>Welcome to The Recipe Searcher!<br>Search for a dish name to find a recipe.</h2>
-
+	
 		<label>Dish Name:</label>
 		<input type = "text" id="searchInput" placeholder = "chicken"></input>
+		<select id="categoryFilter">
+			<option value="">All</option>
+			<option value="Beef">Beef</option>
+    		<option value="Breakfast">Breakfast</option>
+    		<option value="Chicken">Chicken</option>
+    		<option value="Dessert">Dessert</option>
+			<option value="Goat">Goat</option>
+			<option value="Lamb">Lamb</option>
+    		<option value="Miscellaneous">Miscellaneous</option>
+    		<option value="Pasta">Pasta</option>
+    		<option value="Pork">Pork</option>
+			<option value="Seafood">Seafood</option>
+			<option value="Side">Side</option>
+    		<option value="Starter">Starter</option>
+    		<option value="Vegan">Vegan</option>
+    		<option value="Vegetarian">Vegetarian</option>
+		</select>
 		<button id = "searchBtn">Search</button>
 		
 		<p id = "status"></p>
