@@ -9,6 +9,7 @@ let currentMeals = [];
 
 // Button Listeners ()
 searchBtn.addEventListener("click", runSearch);
+categoryFilter.addEventListener("change", runSearch);
 results.addEventListener("click", function (e) {
     const id = e.target.getAttribute("meal-id");
 
