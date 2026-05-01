@@ -82,11 +82,10 @@ function viewRecipe(id) {
 		
 	for (let i = 1; i <= 20; i++) {
 		const ingred = meal[`strIngredient${i}`];
-		
+		const measure = meal[`strMeasure${i}`];
 	if (ingred.trim() !== "") {
-		ingredients.push(ingred);}
-	}
-		
+		ingredients.push(`${measure ? measure.trim() : ""}${measure ? " ": ""}${ingred.trim()}`);}
+	}	
 		
     savedContainer.innerHTML = `
         <div class="card">
